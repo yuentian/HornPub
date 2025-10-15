@@ -253,40 +253,49 @@
     </div>
 
     <script>
-        const video = document.getElementById('video');
-        const saturationSlider = document.getElementById('saturation');
-        const hueSlider = document.getElementById('hue');
-        const brightnessSlider = document.getElementById('brightness');
-        const saturationValue = document.getElementById('saturation-value');
-        const hueValue = document.getElementById('hue-value');
-        const brightnessValue = document.getElementById('brightness-value');
-        const resetButton = document.getElementById('reset');
+        (function() {
+            const video = document.getElementById('video');
+            const saturationSlider = document.getElementById('saturation');
+            const hueSlider = document.getElementById('hue');
+            const brightnessSlider = document.getElementById('brightness');
+            const saturationValue = document.getElementById('saturation-value');
+            const hueValue = document.getElementById('hue-value');
+            const brightnessValue = document.getElementById('brightness-value');
+            const resetButton = document.getElementById('reset');
 
-        function updateFilters() {
-            const saturation = saturationSlider.value;
-            const hue = hueSlider.value;
-            const brightness = brightnessSlider.value;
+            // Ensure all elements exist before proceeding
+            if (!video || !saturationSlider || !hueSlider || !brightnessSlider || 
+                !saturationValue || !hueValue || !brightnessValue || !resetButton) {
+                console.error('Required elements not found');
+                return;
+            }
 
-            video.style.filter = `saturate(${saturation}%) hue-rotate(${hue}deg) brightness(${brightness}%)`;
-            
-            saturationValue.textContent = `${saturation}%`;
-            hueValue.textContent = `${hue}°`;
-            brightnessValue.textContent = `${brightness}%`;
-        }
+            function updateFilters() {
+                const saturation = saturationSlider.value;
+                const hue = hueSlider.value;
+                const brightness = brightnessSlider.value;
 
-        saturationSlider.addEventListener('input', updateFilters);
-        hueSlider.addEventListener('input', updateFilters);
-        brightnessSlider.addEventListener('input', updateFilters);
+                video.style.filter = `saturate(${saturation}%) hue-rotate(${hue}deg) brightness(${brightness}%)`;
+                
+                saturationValue.textContent = `${saturation}%`;
+                hueValue.textContent = `${hue}°`;
+                brightnessValue.textContent = `${brightness}%`;
+            }
 
-        resetButton.addEventListener('click', () => {
-            saturationSlider.value = 100;
-            hueSlider.value = 0;
-            brightnessSlider.value = 100;
+            saturationSlider.addEventListener('input', updateFilters);
+            hueSlider.addEventListener('input', updateFilters);
+            brightnessSlider.addEventListener('input', updateFilters);
+
+            resetButton.addEventListener('click', () => {
+                saturationSlider.value = 100;
+                hueSlider.value = 0;
+                brightnessSlider.value = 100;
+                updateFilters();
+            });
+
+            // Initialize filters
             updateFilters();
-        });
-
-        // Initialize filters
-        updateFilters();
+        })();
     </script>
 </body>
 </html>
